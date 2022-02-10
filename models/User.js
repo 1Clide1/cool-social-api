@@ -8,6 +8,11 @@ const UserSchema = new Schema({
     minlength: 3,
     required: "username must be at least 3 characters long.",
   },
+  email: {
+    type: String,
+    unique: true,
+    match: [/.{1,}@[^.]{1,}/, "must be an email"],
+  },
   thoughts: [
     {
       type: Schema.Types.ObjectId,
