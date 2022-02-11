@@ -1,24 +1,7 @@
 // creating the thoughts model
 const { Schema, model } = require("mongoose");
-const ThoughtsSchema = new Schema({
-  thoughtText: {
-    type: String,
-    minlength: 1,
-    maxlength: 280,
-    required: [true, "Must be at least 1 or 280 characters long"],
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
-  },
-  username: {
-    type: String,
-    required: [true, "A username is required"],
-  },
-  reactions: [reactionSchema],
-});
 // making the nested reaction schema
+// this needs to be first if it is in the same file
 const reactionSchema = new Schema({
   reactionId: {
     type: Schema.Types.ObjectId,
@@ -38,6 +21,25 @@ const reactionSchema = new Schema({
     default: Date.now,
     timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
   },
+});
+// making the thoughts schema
+const ThoughtsSchema = new Schema({
+  thoughtText: {
+    type: String,
+    minlength: 1,
+    maxlength: 280,
+    required: [true, "Must be at least 1 or 280 characters long"],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
+  },
+  username: {
+    type: String,
+    required: [true, "A username is required"],
+  },
+  reactions: [reactionSchema],
 });
 // making a virtual for the reaction count
 ThoughtsSchema.virtual("reactionCount").get(function () {
