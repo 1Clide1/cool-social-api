@@ -10,6 +10,7 @@ const ThoughtsSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
   },
   username: {
     type: String,
@@ -35,6 +36,7 @@ const reactionSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
   },
 });
 // making a virtual for the reaction count
