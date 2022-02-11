@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     unique: true,
     trim: true,
     minlength: 3,
-    required: "username must be at least 3 characters long.",
+    required: [true, "username must be at least 3 characters long."],
   },
   email: {
     type: String,
@@ -29,7 +29,7 @@ const UserSchema = new Schema({
     },
   ],
 });
-
+// export the model
 const User = model("User", UserSchema);
 
 module.exports = User;
