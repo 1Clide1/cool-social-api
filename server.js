@@ -1,19 +1,22 @@
+// import the dependencies
 const express = require("express");
 const mongoose = require("mongoose");
-
+// set express up as app and set the port
 const app = express();
 const PORT = process.env.PORT || 3001;
-
-const { Thoughts, User } = require("./models");
+// import the routes from controller
+// -----
 // require the connection file since I put it in a seperate folder
 require("./config/connection");
-
+// express middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// make sure to be on 5.3 to use these settings
+// make sure to be on mongoose 5.3 to use these settings
+// setting the mongoose middlewares
 mongoose.set("useCreateIndex", true);
 mongoose.set("debug", true);
-
+// using the express routes in the server
+// ---
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });
