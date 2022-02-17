@@ -30,7 +30,7 @@ router.get("/:id", async ({ params }, res) => {
   }
 });
 // route to create a thought
-router.post("/", async ({ params, body }, res) => {
+router.post("/", async ({ body }, res) => {
   try {
     const createThought = await Thoughts.create(body);
     ({ userId: _id }) => {
@@ -51,6 +51,44 @@ router.post("/", async ({ params, body }, res) => {
     res.status(400).json(err);
   }
 });
-
+// route to update a thought by its specific id
+router.put("/:id", async ({ params, body }, res) => {
+  try {
+    const updateThoughts = await Thoughts.findOneAndUpdate(
+      { _id: params.id },
+      body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    if (!updateThoughts) {
+      res
+        .status(404)
+        .json({ message: "there are no thoughts that are found with this id" });
+    } else {
+      res.json(updateThoughts);
+      console.log(`user: ${updateThoughts} has been updated`);
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+// route to delet a thought
+router.delete("/:id", async ({ params }, res) => {
+  try {
+    const deleteThought = await Thoughts.findOneAndDelete({ _id: params.id });
+    if (!deleteThought) {
+      res
+        .status(404)
+        .json({ message: "there are no users that are found with this id" });
+    } else {
+      res.json(deleteThought);
+      console.log(`user: ${deleteThought} has been deleted`);
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 // export the router
 module.exports = router;
