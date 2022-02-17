@@ -26,7 +26,8 @@ router.get("/:id", async ({ params }, res) => {
         // same idea for the friends array in the user model
         path: "friends",
         select: "-__v",
-      });
+      })
+      .select("-__v");
     if (!getUserId) {
       // using 404 because that means that the server could not find what you are looking for or it does not exist in the server
       res.status(404).json({ message: "there are no users with this id" });

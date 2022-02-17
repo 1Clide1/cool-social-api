@@ -32,14 +32,15 @@ router.get("/:id", async ({ params }, res) => {
 // route to create a thought
 router.post("/", async ({ body }, res) => {
   try {
-    const createThought = await Thoughts.create(body);
-    ({ userId: _id }) => {
+    //   I was trying to not use then and to only use try and catch but using then in this case just
+    // made what I was trying to do more effective
+    const createThought = await Thoughts.create(body).then(({ _id }) => {
       return User.findOneAndUpdate(
         { username: body.username },
-        { $push: { thoughts: userId } },
+        { $push: { thoughts: _id } },
         { new: true }
       );
-    };
+    });
     if (!userId) {
       res.status(404).json({ message: "there are no users with this id" });
     } else {
