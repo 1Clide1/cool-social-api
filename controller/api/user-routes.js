@@ -9,7 +9,8 @@ router.get("/", async (req, res) => {
     const getUsers = await User.find();
     res.json(getUsers);
   } catch (err) {
-    res.json(err);
+    // I am using status 500 because if I can't get users (assuming I have at least one) then there is something wrong with the server
+    res.status(500).json(err);
   }
 });
 // route to get a user by it's id and it's populated thought and friend data
